@@ -21,20 +21,11 @@ jobs:
       run: mkdir -p build
 
     - name: Install Pandoc and dependencies
-      run: |
-        apt-get update
-        apt-get install -y pandoc pandoc-citeproc
+      run: apt-get update && apt-get install -y pandoc pandoc-citeproc
 
-    - name: Verify tools
-      run: |
-        echo "Pandoc version:"
-        pandoc --version
-        echo "LaTeX version:"
-        pdflatex --version
 
     - name: Build PDF
-      run: |
-        make pdf
+      run:  make pdf
 
     - name: Upload PDF artifact
       uses: actions/upload-artifact@v4
