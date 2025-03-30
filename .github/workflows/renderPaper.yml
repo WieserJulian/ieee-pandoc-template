@@ -12,18 +12,7 @@ jobs:
       - name: Install dependencies
         run: |
             sudo apt-get update -y \
-
-            # Install the full version 
-            # sudo apt-get install texlive-full -y
-            # or only your required latex packages 
-            sudo apt install -y \
-                texlive-base \
-                texlive-latex-base \
-                texlive-latex-recommended \
-                texlive-latex-extra \
-                texlive-fonts-recommended \
-                latexmk \
-                lmodern
+            sudo apt install texlive texlive-latex-extra
 
       - uses: docker://pandoc/core:3.5
         with:
