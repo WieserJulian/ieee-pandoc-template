@@ -9,10 +9,22 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - name: Install pdflatex
+      - name: Install dependencies
         run: |
-              sudo apt-get update \
-              sudo apt-get install texlive-latex-base
+            sudo apt-get update -y \
+
+            # Install the full version 
+            # sudo apt-get install texlive-full -y
+            # or only your required latex packages 
+            sudo apt install -y \
+                texlive-base \
+                texlive-latex-base \
+                texlive-latex-recommended \
+                texlive-latex-extra \
+                texlive-fonts-recommended \
+                latexmk \
+                lmodern
+
       - uses: docker://pandoc/core:3.5
         with:
           args: -o build/paper.pdf --bibliography=bibliography.bib --csl=bibliography.csl -s -f markdown --template=template.latex paper.md metadata.yaml
