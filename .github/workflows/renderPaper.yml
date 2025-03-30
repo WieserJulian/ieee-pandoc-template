@@ -3,32 +3,16 @@ name: Render Paper
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    container: 
-      image: ghcr.io/xu-cheng/texlive-full:latest
-      options: --user root
-
+  convert_via_pandoc:
+    runs-on: ubuntu-22.04
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
-    - name: Create build directory
-      run: mkdir -p build
-
-    - name: Install Pandoc and dependencies
-      run: apt-get update && apt-get install -y pandoc pandoc-citeproc
-
-
-    - name: Build PDF
-      run:  make pdf
-
-    - name: Upload PDF artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: paper
-        path: build/paper.pdf
+      - uses: actions/checkout@v4
+      - uses: docker://pandoc/core:3.5
+        with:
+          args: -o build/paper.pdf --bibliography=bibliography.bib --csl=bibliography.csl -s -f markdown --template=template.latex paper.md metadata.yaml
+      - uses: actions/upload-artifact@v4
+        with:
+          name: build
+          path: build
