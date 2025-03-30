@@ -9,14 +9,15 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - name: Install dependencies
-        run: sudo apt-get update
-      - name: Install padlatex
-        run: sudo apt install texlive texlive-latex-extra
+
+      # Install LaTeX dependencies
+      - name: Install LaTeX dependencies
+        run: sudo apt-get update && sudo apt-get install -y texlive texlive-latex-extra
 
       - uses: docker://pandoc/core:3.5
         with:
           args: -o build/paper.pdf --bibliography=bibliography.bib --csl=bibliography.csl -s -f markdown --template=template.latex paper.md metadata.yaml
+
       - uses: actions/upload-artifact@v4
         with:
           name: build
