@@ -13,6 +13,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-
+    - name: Install pandoc
+      run: sudo apt install pandoc pandoc-citeproc texlive-full texlive-publishers
     - name: Render PDF
       run: make
