@@ -1,15 +1,18 @@
-name: Render Paper
+name: Build Paper
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ main ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ main ]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
+    container: 
+      image: ghcr.io/xu-cheng/texlive-full:latest
+      options: --user root
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -34,7 +37,7 @@ jobs:
         make pdf
 
     - name: Upload PDF artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v3
       with:
         name: paper
         path: build/paper.pdf
