@@ -10,10 +10,31 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v4
-    - name: Install pandoc
-      run: sudo apt install pandoc pandoc-citeproc texlive-full texlive-publishers
-    - name: Render PDF
-      run: make
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Create build directory
+      run: mkdir -p build
+
+    - name: Install Pandoc and dependencies
+      run: |
+        apt-get update
+        apt-get install -y pandoc pandoc-citeproc
+
+    - name: Verify tools
+      run: |
+        echo "Pandoc version:"
+        pandoc --version
+        echo "LaTeX version:"
+        pdflatex --version
+
+    - name: Build PDF
+      run: |
+        make pdf
+
+    - name: Upload PDF artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: paper
+        path: build/paper.pdf
