@@ -10,9 +10,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install dependencies
-        run: |
-            sudo apt-get update -y \
-            sudo apt install texlive texlive-latex-extra
+        run: sudo apt-get update
+      - name: Install padlatex
+        run: sudo apt install texlive texlive-latex-extra
 
       - uses: docker://pandoc/core:3.5
         with:
