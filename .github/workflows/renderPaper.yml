@@ -10,19 +10,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Install LaTeX dependencies
-      - name: Setup Pandoc Document Converter
-        # You may pin to the exact commit or the version.
-        # uses: siacodelabs/setup-pandoc@ae6943ddd791fe2afdbb753b1baef3780e37e673
-        uses: siacodelabs/setup-pandoc@v1
-        with:
-          # Set if to install XeLaTeX.
-            xelatex: true # optional, default is false
+ 
+      - name: Update pandoc
+        runs: sudo apt update && sudo apt install pandoc pandoc-citeproc texlive-full texlive-publishers
                 
 
-      - uses: docker://pandoc/core:3.5
-        with:
-          args: -o build/paper.pdf --bibliography=bibliography.bib --csl=bibliography.csl -s -f markdown --template=template.latex paper.md metadata.yaml --pdf-engine=xelatex
+      - name: Make pdf
+        runs: pandoc -o build/paper.pdf --bibliography=bibliography.bib --csl=bibliography.csl -s -f markdown --template=template.latex paper.md metadata.yaml
 
       - uses: actions/upload-artifact@v4
         with:
