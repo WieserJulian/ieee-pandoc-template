@@ -3,9 +3,6 @@ name: Render Paper to PDF
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
-  workflow_dispatch:
 
 jobs:
   build:
@@ -16,7 +13,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo apt-get update && sudo apt install pandoc pandoc-citeproc texlive-scheme-full texlive-full texlive-publishers
+          sudo apt-get update && sudo apt-get install pandoc pandoc-citeproc texlive-scheme-full texlive-full texlive-publishers
 
       - name: Render PDF
         run: |
