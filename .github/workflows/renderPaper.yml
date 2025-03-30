@@ -12,9 +12,8 @@ jobs:
 
  
       - name: Update pandoc
-        run: sudo apt update && sudo apt install pandoc pandoc-citeproc texlive-full texlive-publishers
+        run: sudo apt install texlive-bibtex-extra texlive-fonts-recommended texlive-fonts-extra texlive-latex-recommended texlive-latex-extra
                 
-
       - name: Make pdf
         run: pandoc -o build/paper.pdf --bibliography=bibliography.bib --csl=bibliography.csl -s -f markdown --template=template.latex paper.md metadata.yaml
 
