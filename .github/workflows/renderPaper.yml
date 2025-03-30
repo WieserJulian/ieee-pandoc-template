@@ -9,12 +9,9 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - uses: teatimeguest/setup-texlive-action@v3
-        with:
-          packages: |
-            scheme-basic
-            hyperref
-            microtype
+      - name: Install pdflatex
+        run: |
+              sudo apt-get install texlive-latex-base
       - uses: docker://pandoc/core:3.5
         with:
           args: -o build/paper.pdf --bibliography=bibliography.bib --csl=bibliography.csl -s -f markdown --template=template.latex paper.md metadata.yaml
